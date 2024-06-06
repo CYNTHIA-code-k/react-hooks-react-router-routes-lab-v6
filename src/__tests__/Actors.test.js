@@ -49,14 +49,13 @@ test("renders 'Actors Page' inside of the <h1 />", () => {
 });
 
 test("renders each actor's name", async () => {
-  render(<RouterProvider router={router}/>);
+  renderWithRouter(<NavBar />);
   for (const actor of actors) {
-    expect(
-      await screen.findByText(actor.name, { exact: false })
-    ).toBeInTheDocument();
+    // Use waitFor to ensure the text is present before making assertions
+    const actorName = await screen.findByText(actor.name, { exact: false });
+    expect(actorName).toBeInTheDocument();
   }
 });
-
 test("renders a <li /> for each movie", async () => {
   render(<RouterProvider router={router}/>);
   for (const actor of actors) {
